@@ -93,20 +93,20 @@ ELSAが採用するアメリカ英語（General American）の全音素47個を�
 
 各発音記号が持つフィールド:
 
-| フィールド | 型 | 説明 |
-|-----------|------|------|
-| symbol | string | 発音記号（例: "p"） |
-| displaySymbol | string | 表示用（例: "/p/"） |
-| category | string | 大分類（consonant / monophthong / diphthong / r-colored） |
-| subcategory | string | 中分類（plosive / fricative / front-vowel など） |
-| voicing | string? | 有声/無声（子音のみ） |
-| articulationPoint | string? | 調音点（子音のみ） |
-| openness | string? | 開口度（母音のみ） |
-| movement | string? | 動き（二重母音のみ） |
-| exampleWord | string | 例語 |
-| elsaNotation | string | ELSA表記 |
-| japaneseApprox | string | 日本語近似音 |
-| description | string | 発音の仕方の説明（数行テキスト）※初期はダミー |
+| フィールド        | 型      | 説明                                                      |
+| ----------------- | ------- | --------------------------------------------------------- |
+| symbol            | string  | 発音記号（例: "p"）                                       |
+| displaySymbol     | string  | 表示用（例: "/p/"）                                       |
+| category          | string  | 大分類（consonant / monophthong / diphthong / r-colored） |
+| subcategory       | string  | 中分類（plosive / fricative / front-vowel など）          |
+| voicing           | string? | 有声/無声（子音のみ）                                     |
+| articulationPoint | string? | 調音点（子音のみ）                                        |
+| openness          | string? | 開口度（母音のみ）                                        |
+| movement          | string? | 動き（二重母音のみ）                                      |
+| exampleWord       | string  | 例語                                                      |
+| elsaNotation      | string  | ELSA表記                                                  |
+| japaneseApprox    | string  | 日本語近似音                                              |
+| description       | string  | 発音の仕方の説明（数行テキスト）※初期はダミー             |
 
 ---
 
@@ -298,29 +298,29 @@ PC（幅 >= 768px）:
 
 本アプリはAPIアクセスやユーザー入力がないため、エラーが発生するケースは限定的。
 
-| エラーケース | 対応 |
-|------------|------|
+| エラーケース     | 対応                                               |
+| ---------------- | -------------------------------------------------- |
 | JSの読み込み失敗 | 静的HTMLとしてコンテンツ自体は表示される設計とする |
-| ブラウザ非対応 | セマンティックHTMLにより最低限の情報は表示可能 |
+| ブラウザ非対応   | セマンティックHTMLにより最低限の情報は表示可能     |
 
 ### アクセシビリティ
 
-| 要素 | 対応 |
-|------|------|
-| タブ | `role="tablist"` / `role="tab"` / `aria-selected` |
-| タブパネル | `role="tabpanel"` / `aria-labelledby` |
-| アコーディオン | `aria-expanded` / `aria-controls` |
-| タッチターゲット | 最低 44x44pt |
-| コントラスト比 | 4.5:1 以上（ダークモード背景に対して） |
-| セマンティクス | `<h2>` でセクション見出し、`<button>` でカード |
+| 要素             | 対応                                              |
+| ---------------- | ------------------------------------------------- |
+| タブ             | `role="tablist"` / `role="tab"` / `aria-selected` |
+| タブパネル       | `role="tabpanel"` / `aria-labelledby`             |
+| アコーディオン   | `aria-expanded` / `aria-controls`                 |
+| タッチターゲット | 最低 44x44pt                                      |
+| コントラスト比   | 4.5:1 以上（ダークモード背景に対して）            |
+| セマンティクス   | `<h2>` でセクション見出し、`<button>` でカード    |
 
 ### ローディング・フィードバック
 
-| シーン | 対応 |
-|--------|------|
-| 初期表示 | 全データを静的に保持。ローディング表示不要 |
-| タブ切り替え | クライアントサイドで即時切り替え。スピナー不要 |
-| アコーディオン開閉 | CSS transition で滑らかに展開/収縮 |
+| シーン             | 対応                                           |
+| ------------------ | ---------------------------------------------- |
+| 初期表示           | 全データを静的に保持。ローディング表示不要     |
+| タブ切り替え       | クライアントサイドで即時切り替え。スピナー不要 |
+| アコーディオン開閉 | CSS transition で滑らかに展開/収縮             |
 
 ### フォームバリデーション
 
