@@ -8,16 +8,10 @@ import { PhonemeCard } from './PhonemeCard'
 interface SectionGroupProps {
   readonly subcategory: Subcategory
   readonly phonemes: readonly Phoneme[]
-  readonly expandedSymbols: ReadonlySet<string>
-  readonly onToggle: (symbol: string) => void
+  readonly onSelect: (phoneme: Phoneme) => void
 }
 
-export function SectionGroup({
-  subcategory,
-  phonemes,
-  expandedSymbols,
-  onToggle,
-}: SectionGroupProps) {
+export function SectionGroup({ subcategory, phonemes, onSelect }: SectionGroupProps) {
   const label = getSubcategoryLabel(subcategory)
 
   return (
@@ -33,8 +27,7 @@ export function SectionGroup({
           <PhonemeCard
             key={phoneme.symbol}
             phoneme={phoneme}
-            isExpanded={expandedSymbols.has(phoneme.symbol)}
-            onToggle={() => onToggle(phoneme.symbol)}
+            onSelect={() => onSelect(phoneme)}
           />
         ))}
       </div>
