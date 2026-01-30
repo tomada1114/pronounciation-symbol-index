@@ -1,10 +1,19 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import Page from '@/app/page'
 
-afterEach(cleanup)
+const STORAGE_KEY = 'difficult-phonemes'
+
+beforeEach(() => {
+  localStorage.clear()
+})
+
+afterEach(() => {
+  cleanup()
+  localStorage.clear()
+})
 
 describe('Page integration', () => {
   it('displays the header "発音記号インデックス"', () => {
@@ -100,5 +109,54 @@ describe('Page integration', () => {
     fireEvent.animationEnd(screen.getByRole('dialog'))
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+})
+
+describe('Page bookmark integration', () => {
+  it('displays a link to /difficult page', () => {
+    render(<Page />)
+
+    const link = screen.getByRole('link', { name: /苦手一覧/ })
+    expect(link).toHaveAttribute('href', '/difficult')
+  })
+
+  it('does not show count badge when no bookmarks exist', () => {
+    render(<Page />)
+
+    const link = screen.getByRole('link', { name: /苦手一覧/ })
+    expect(link.textContent).not.toMatch(/\d/)
+  })
+
+  it('shows count badge when bookmarks exist', () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(['p', 'b']))
+    render(<Page />)
+
+    const link = screen.getByRole('link', { name: /苦手一覧/ })
+    expect(link.textContent).toContain('2')
+  })
+
+  it('shows bookmark button inside modal', async () => {
+    const user = userEvent.setup()
+    render(<Page />)
+
+    const firstCard = screen.getAllByRole('button', { name: /^\// })[0]
+    await user.click(firstCard)
+
+    expect(screen.getByRole('button', { name: '苦手に追加' })).toBeInTheDocument()
+  })
+
+  it('toggles bookmark from modal and updates badge count', async () => {
+    const user = userEvent.setup()
+    render(<Page />)
+
+    const firstCard = screen.getAllByRole('button', { name: /^\// })[0]
+    await user.click(firstCard)
+
+    await user.click(screen.getByRole('button', { name: '苦手に追加' }))
+
+    expect(screen.getByRole('button', { name: '苦手を解除' })).toBeInTheDocument()
+
+    const link = screen.getByRole('link', { name: /苦手一覧/ })
+    expect(link.textContent).toContain('1')
   })
 })
