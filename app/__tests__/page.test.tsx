@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it } from 'vitest'
 
@@ -40,7 +40,7 @@ describe('Page integration', () => {
   it('displays 24 phoneme cards in consonant tab', () => {
     render(<Page />)
 
-    const buttons = screen.getAllByRole('button', { expanded: false })
+    const buttons = screen.getAllByRole('button', { name: /^\// })
     expect(buttons).toHaveLength(24)
   })
 
@@ -53,36 +53,52 @@ describe('Page integration', () => {
     expect(screen.getByRole('heading', { name: /前舌母音（Front Vowels）/ })).toBeInTheDocument()
   })
 
-  it('expands a card when clicked (aria-expanded becomes true)', async () => {
+  it('opens a modal when a card is clicked', async () => {
     const user = userEvent.setup()
     render(<Page />)
 
-    const firstCard = screen.getAllByRole('button', { expanded: false })[0]
+    const firstCard = screen.getAllByRole('button', { name: /^\// })[0]
     await user.click(firstCard)
 
-    expect(firstCard).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
   })
 
-  it('shows example word and ELSA notation when card is expanded', async () => {
+  it('shows phoneme details inside the modal', async () => {
     const user = userEvent.setup()
     render(<Page />)
 
-    const firstCard = screen.getAllByRole('button', { expanded: false })[0]
+    const firstCard = screen.getAllByRole('button', { name: /^\// })[0]
     await user.click(firstCard)
 
     expect(screen.getByText(/pat/)).toBeInTheDocument()
     expect(screen.getByText(/\/pæt\//)).toBeInTheDocument()
   })
 
-  it('collapses an expanded card when clicked again', async () => {
+  it('closes the modal when close button is clicked', async () => {
     const user = userEvent.setup()
     render(<Page />)
 
-    const firstCard = screen.getAllByRole('button', { expanded: false })[0]
+    const firstCard = screen.getAllByRole('button', { name: /^\// })[0]
     await user.click(firstCard)
-    expect(firstCard).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
 
+    await user.click(screen.getByRole('button', { name: '閉じる' }))
+    fireEvent.animationEnd(screen.getByRole('dialog'))
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('closes the modal when Escape is pressed', async () => {
+    const user = userEvent.setup()
+    render(<Page />)
+
+    const firstCard = screen.getAllByRole('button', { name: /^\// })[0]
     await user.click(firstCard)
-    expect(firstCard).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+
+    await user.keyboard('{Escape}')
+    fireEvent.animationEnd(screen.getByRole('dialog'))
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 })

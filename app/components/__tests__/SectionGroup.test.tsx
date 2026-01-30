@@ -1,4 +1,5 @@
 import { cleanup, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { SectionGroup } from '../SectionGroup'
@@ -50,8 +51,7 @@ describe('SectionGroup', () => {
   const defaultProps = {
     subcategory: 'plosive' as const,
     phonemes: mockPlosives,
-    expandedSymbols: new Set<string>(),
-    onToggle: vi.fn(),
+    onSelect: vi.fn(),
   }
 
   it('displays the section heading in "破裂音（Plosives）" format', () => {
@@ -75,13 +75,14 @@ describe('SectionGroup', () => {
     expect(screen.getByText('/t/')).toBeInTheDocument()
   })
 
-  it('renders expanded cards for phonemes in expandedSymbols', () => {
-    render(<SectionGroup {...defaultProps} expandedSymbols={new Set(['p'])} />)
+  it('calls onSelect with the phoneme when a card is clicked', async () => {
+    const onSelect = vi.fn()
+    const user = userEvent.setup()
 
-    const buttons = screen.getAllByRole('button')
-    const pButton = buttons.find((btn) => btn.getAttribute('aria-expanded') === 'true')
-    expect(pButton).toBeDefined()
+    render(<SectionGroup {...defaultProps} onSelect={onSelect} />)
 
-    expect(screen.getByText('両唇')).toBeInTheDocument()
+    await user.click(screen.getByText('/p/'))
+    expect(onSelect).toHaveBeenCalledTimes(1)
+    expect(onSelect).toHaveBeenCalledWith(mockPlosives[0])
   })
 })

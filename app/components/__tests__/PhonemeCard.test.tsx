@@ -19,34 +19,21 @@ const mockConsonant: Phoneme = {
   description: 'テスト用の発音説明です。',
 }
 
-const mockVowel: Phoneme = {
-  symbol: 'i',
-  displaySymbol: '/i/',
-  category: 'monophthong',
-  subcategory: 'front-vowel',
-  openness: '狭（閉）',
-  exampleWord: 'feet',
-  elsaNotation: '/fit/',
-  japaneseApprox: '「イー」（長め）',
-  description: 'テスト用の母音説明です。',
-}
-
 describe('PhonemeCard', () => {
   afterEach(cleanup)
 
   const defaultProps = {
     phoneme: mockConsonant,
-    isExpanded: false,
-    onToggle: vi.fn(),
+    onSelect: vi.fn(),
   }
 
-  it('displays the displaySymbol in closed state', () => {
+  it('displays the displaySymbol', () => {
     render(<PhonemeCard {...defaultProps} />)
 
     expect(screen.getByText('/p/')).toBeInTheDocument()
   })
 
-  it('displays the subcategory label in closed state', () => {
+  it('displays the subcategory label', () => {
     render(<PhonemeCard {...defaultProps} />)
 
     expect(screen.getByText('破裂音')).toBeInTheDocument()
@@ -58,41 +45,19 @@ describe('PhonemeCard', () => {
     expect(screen.getByRole('button')).toBeInTheDocument()
   })
 
-  it('has aria-expanded="false" when isExpanded is false', () => {
-    render(<PhonemeCard {...defaultProps} isExpanded={false} />)
+  it('has aria-haspopup="dialog"', () => {
+    render(<PhonemeCard {...defaultProps} />)
 
-    expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.getByRole('button')).toHaveAttribute('aria-haspopup', 'dialog')
   })
 
-  it('has aria-expanded="true" when isExpanded is true', () => {
-    render(<PhonemeCard {...defaultProps} isExpanded={true} />)
-
-    expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'true')
-  })
-
-  it('calls onToggle when clicked', async () => {
-    const onToggle = vi.fn()
+  it('calls onSelect when clicked', async () => {
+    const onSelect = vi.fn()
     const user = userEvent.setup()
 
-    render(<PhonemeCard {...defaultProps} onToggle={onToggle} />)
+    render(<PhonemeCard {...defaultProps} onSelect={onSelect} />)
 
     await user.click(screen.getByRole('button'))
-    expect(onToggle).toHaveBeenCalledTimes(1)
-  })
-
-  it('shows PhonemeDetail content when expanded', () => {
-    render(<PhonemeCard {...defaultProps} isExpanded={true} />)
-
-    expect(screen.getByText('両唇')).toBeInTheDocument()
-    expect(screen.getByText('pat /pæt/')).toBeInTheDocument()
-    expect(screen.getByText('パ行')).toBeInTheDocument()
-    expect(screen.getByText('テスト用の発音説明です。')).toBeInTheDocument()
-  })
-
-  it('shows vowel-specific details when expanded with vowel phoneme', () => {
-    render(<PhonemeCard phoneme={mockVowel} isExpanded={true} onToggle={vi.fn()} />)
-
-    expect(screen.getByText('狭（閉）')).toBeInTheDocument()
-    expect(screen.getByText('feet /fit/')).toBeInTheDocument()
+    expect(onSelect).toHaveBeenCalledTimes(1)
   })
 })
