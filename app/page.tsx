@@ -2,28 +2,25 @@
 
 import { useState } from 'react'
 
+import { PhonemeModal } from '@/app/components/PhonemeModal'
 import { SectionGroup } from '@/app/components/SectionGroup'
 import { TabBar } from '@/app/components/TabBar'
 import { getPhonemesByCategory, groupBySubcategory } from '@/app/domain/helpers'
-import type { Category, Subcategory } from '@/app/domain/types'
+import type { Category, Phoneme, Subcategory } from '@/app/domain/types'
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Category>('consonant')
-  const [expandedSymbols, setExpandedSymbols] = useState<Set<string>>(() => new Set())
+  const [selectedPhoneme, setSelectedPhoneme] = useState<Phoneme | null>(null)
 
   const filteredPhonemes = getPhonemesByCategory(activeTab)
   const grouped = groupBySubcategory(filteredPhonemes)
 
-  const handleToggle = (symbol: string) => {
-    setExpandedSymbols((prev) => {
-      const next = new Set(prev)
-      if (next.has(symbol)) {
-        next.delete(symbol)
-      } else {
-        next.add(symbol)
-      }
-      return next
-    })
+  const handleSelect = (phoneme: Phoneme) => {
+    setSelectedPhoneme(phoneme)
+  }
+
+  const handleClose = () => {
+    setSelectedPhoneme(null)
   }
 
   return (
@@ -45,11 +42,14 @@ export default function Home() {
             key={subcategory}
             subcategory={subcategory as Subcategory}
             phonemes={phonemes}
-            expandedSymbols={expandedSymbols}
-            onToggle={handleToggle}
+            onSelect={handleSelect}
           />
         ))}
       </main>
+
+      {selectedPhoneme !== null && (
+        <PhonemeModal phoneme={selectedPhoneme} onClose={handleClose} />
+      )}
     </div>
   )
 }
