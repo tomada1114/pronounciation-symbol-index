@@ -36,12 +36,17 @@ export function PhonemeDetail({ phoneme }: PhonemeDetailProps) {
         <p className="text-sm font-semibold" style={{ color: 'var(--text-secondary, #A1A1AA)' }}>
           発音の仕方
         </p>
-        <p
-          className="mt-1 text-base leading-relaxed"
-          style={{ color: 'var(--text-secondary, #A1A1AA)' }}
-        >
-          {phoneme.description}
-        </p>
+        <div className="mt-1 flex flex-col gap-2">
+          {phoneme.description.split('\n\n').map((paragraph, index) => (
+            <p
+              key={index}
+              className="text-base leading-relaxed"
+              style={{ color: 'var(--text-secondary, #A1A1AA)' }}
+            >
+              {paragraph}
+            </p>
+          ))}
+        </div>
       </div>
     </div>
   )

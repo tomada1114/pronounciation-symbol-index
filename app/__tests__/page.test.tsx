@@ -79,8 +79,7 @@ describe('Page integration', () => {
     const firstCard = screen.getAllByRole('button', { name: /^\// })[0]
     await user.click(firstCard)
 
-    expect(screen.getByText(/pat/)).toBeInTheDocument()
-    expect(screen.getByText(/\/pæt\//)).toBeInTheDocument()
+    expect(screen.getByText(/^pat \/pæt\/$/)).toBeInTheDocument()
   })
 
   it('closes the modal when close button is clicked', async () => {
