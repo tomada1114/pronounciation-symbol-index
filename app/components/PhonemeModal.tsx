@@ -6,14 +6,17 @@ import { createPortal } from 'react-dom'
 import { getSubcategoryLabel } from '@/app/domain/helpers'
 import type { Phoneme } from '@/app/domain/types'
 
+import { BookmarkButton } from './BookmarkButton'
 import { PhonemeDetail } from './PhonemeDetail'
 
 interface PhonemeModalProps {
   readonly phoneme: Phoneme
   readonly onClose: () => void
+  readonly isBookmarked: boolean
+  readonly onToggleBookmark: () => void
 }
 
-export function PhonemeModal({ phoneme, onClose }: PhonemeModalProps) {
+export function PhonemeModal({ phoneme, onClose, isBookmarked, onToggleBookmark }: PhonemeModalProps) {
   const [isClosing, setIsClosing] = useState(false)
   const previousFocusRef = useRef<Element | null>(null)
   const closeButtonRef = useRef<HTMLButtonElement>(null)
@@ -107,20 +110,23 @@ export function PhonemeModal({ phoneme, onClose }: PhonemeModalProps) {
               {subcategoryLabel.ja}（{subcategoryLabel.en}）
             </p>
           </div>
-          <button
-            ref={closeButtonRef}
-            onClick={handleCloseClick}
-            aria-label="閉じる"
-            className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-md transition-colors duration-150"
-            style={{
-              color: 'var(--text-muted, #71717A)',
-              backgroundColor: 'transparent',
-            }}
-          >
-            <span className="text-lg" aria-hidden="true">
-              &#x2715;
-            </span>
-          </button>
+          <div className="flex items-center gap-1">
+            <BookmarkButton isBookmarked={isBookmarked} onToggle={onToggleBookmark} />
+            <button
+              ref={closeButtonRef}
+              onClick={handleCloseClick}
+              aria-label="閉じる"
+              className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-md transition-colors duration-150"
+              style={{
+                color: 'var(--text-muted, #71717A)',
+                backgroundColor: 'transparent',
+              }}
+            >
+              <span className="text-lg" aria-hidden="true">
+                &#x2715;
+              </span>
+            </button>
+          </div>
         </div>
 
         <div className="px-4 pb-4">

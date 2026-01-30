@@ -25,6 +25,8 @@ describe('PhonemeModal', () => {
   const defaultProps = {
     phoneme: mockPhoneme,
     onClose: vi.fn(),
+    isBookmarked: false,
+    onToggleBookmark: vi.fn(),
   }
 
   it('renders the phoneme displaySymbol', () => {
@@ -119,5 +121,29 @@ describe('PhonemeModal', () => {
     render(<PhonemeModal {...defaultProps} />)
 
     expect(document.activeElement).toBe(screen.getByRole('button', { name: '閉じる' }))
+  })
+
+  it('renders bookmark button with aria-pressed="false" when not bookmarked', () => {
+    render(<PhonemeModal {...defaultProps} isBookmarked={false} />)
+
+    const bookmarkBtn = screen.getByRole('button', { name: '苦手に追加' })
+    expect(bookmarkBtn).toHaveAttribute('aria-pressed', 'false')
+  })
+
+  it('renders bookmark button with aria-pressed="true" when bookmarked', () => {
+    render(<PhonemeModal {...defaultProps} isBookmarked={true} />)
+
+    const bookmarkBtn = screen.getByRole('button', { name: '苦手を解除' })
+    expect(bookmarkBtn).toHaveAttribute('aria-pressed', 'true')
+  })
+
+  it('calls onToggleBookmark when bookmark button is clicked', async () => {
+    const user = userEvent.setup()
+    const onToggleBookmark = vi.fn()
+    render(<PhonemeModal {...defaultProps} onToggleBookmark={onToggleBookmark} />)
+
+    await user.click(screen.getByRole('button', { name: '苦手に追加' }))
+
+    expect(onToggleBookmark).toHaveBeenCalledTimes(1)
   })
 })
