@@ -1,11 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import {
   ORDERED_CATEGORIES,
+  getLipShapeLabel,
   getPhonemesByCategory,
   getSubcategoryLabel,
+  getTongueRegionLabel,
   groupBySubcategory,
 } from '../helpers'
-import type { Subcategory } from '../types'
+import type { LipShape, Subcategory, TongueRegion } from '../types'
 
 describe('ORDERED_CATEGORIES', () => {
   it('has exactly 4 categories', () => {
@@ -198,6 +200,138 @@ describe('getSubcategoryLabel', () => {
       expect(typeof label.en).toBe('string')
       expect(label.ja.length).toBeGreaterThan(0)
       expect(label.en.length).toBeGreaterThan(0)
+    }
+  })
+})
+
+describe('getLipShapeLabel', () => {
+  it('returns correct label for closed', () => {
+    expect(getLipShapeLabel('closed')).toEqual({
+      ja: '閉じる',
+      en: 'Closed',
+    })
+  })
+
+  it('returns correct label for rounded', () => {
+    expect(getLipShapeLabel('rounded')).toEqual({
+      ja: '丸める',
+      en: 'Rounded',
+    })
+  })
+
+  it('returns correct label for spread', () => {
+    expect(getLipShapeLabel('spread')).toEqual({
+      ja: '横引き',
+      en: 'Spread',
+    })
+  })
+
+  it('returns correct label for labiodental', () => {
+    expect(getLipShapeLabel('labiodental')).toEqual({
+      ja: '歯+唇',
+      en: 'Labiodental',
+    })
+  })
+
+  it('returns correct label for neutral', () => {
+    expect(getLipShapeLabel('neutral')).toEqual({
+      ja: '自然',
+      en: 'Neutral',
+    })
+  })
+
+  it('returns correct label for dynamic', () => {
+    expect(getLipShapeLabel('dynamic')).toEqual({
+      ja: '変化',
+      en: 'Dynamic',
+    })
+  })
+
+  it('returns a label for every LipShape value', () => {
+    const allLipShapes: LipShape[] = [
+      'closed',
+      'rounded',
+      'spread',
+      'labiodental',
+      'neutral',
+      'dynamic',
+    ]
+
+    for (const shape of allLipShapes) {
+      const label = getLipShapeLabel(shape)
+      expect(label).toBeDefined()
+      expect(typeof label.ja).toBe('string')
+      expect(typeof label.en).toBe('string')
+    }
+  })
+})
+
+describe('getTongueRegionLabel', () => {
+  it('returns correct label for tip', () => {
+    expect(getTongueRegionLabel('tip')).toEqual({
+      ja: '舌先',
+      en: 'Tip',
+    })
+  })
+
+  it('returns correct label for blade', () => {
+    expect(getTongueRegionLabel('blade')).toEqual({
+      ja: '前方',
+      en: 'Blade',
+    })
+  })
+
+  it('returns correct label for front', () => {
+    expect(getTongueRegionLabel('front')).toEqual({
+      ja: '前部',
+      en: 'Front',
+    })
+  })
+
+  it('returns correct label for center', () => {
+    expect(getTongueRegionLabel('center')).toEqual({
+      ja: '中央',
+      en: 'Center',
+    })
+  })
+
+  it('returns correct label for back', () => {
+    expect(getTongueRegionLabel('back')).toEqual({
+      ja: '舌の奥',
+      en: 'Back',
+    })
+  })
+
+  it('returns correct label for neutral', () => {
+    expect(getTongueRegionLabel('neutral')).toEqual({
+      ja: '特定なし',
+      en: 'Neutral',
+    })
+  })
+
+  it('returns correct label for dynamic', () => {
+    expect(getTongueRegionLabel('dynamic')).toEqual({
+      ja: '変化',
+      en: 'Dynamic',
+    })
+  })
+
+  it('returns a label for every TongueRegion value', () => {
+    const allTongueRegions: TongueRegion[] = [
+      'tip',
+      'blade',
+      'front',
+      'center',
+      'back',
+      'neutral',
+      'dynamic',
+    ]
+
+    for (const region of allTongueRegions) {
+      const label = getTongueRegionLabel(region)
+      expect(label).toBeDefined()
+      expect(typeof label.ja).toBe('string')
+      expect(typeof label.en).toBe('string')
     }
   })
 })

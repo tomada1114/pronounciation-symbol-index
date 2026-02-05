@@ -8,14 +8,25 @@ describe('isPhoneme', () => {
     displaySymbol: '/p/',
     category: 'consonant',
     subcategory: 'plosive',
-    voicing: '無声',
-    articulationPoint: '両唇',
-    lipPosition: '上下の唇をしっかり閉じて密閉する',
-    tonguePosition: '特定の位置を取らず後続の母音に備えてリラックス',
+    articulation: {
+      lips: {
+        shape: 'closed',
+        description: '上下の唇をしっかり閉じて密閉する',
+      },
+      tongue: {
+        region: 'neutral',
+        description: '特定の位置を取らず後続の母音に備えてリラックス',
+      },
+      voicing: '無声',
+      articulationPoint: '両唇',
+    },
     exampleWord: 'pat',
     elsaNotation: '/pæt/',
     japaneseApprox: 'パ行',
-    description: 'この音の発音方法の説明がここに入ります。',
+    pronunciationGuide: {
+      mechanism: 'この音の発音方法の説明がここに入ります。',
+      comparison: '日本語との比較がここに入ります。',
+    },
   }
 
   it('returns true for a valid Phoneme object', () => {
@@ -28,13 +39,24 @@ describe('isPhoneme', () => {
       displaySymbol: '/i/',
       category: 'monophthong',
       subcategory: 'front-vowel',
-      openness: '狭（閉）',
-      lipPosition: '左右に横に引いて笑顔のような形にする',
-      tonguePosition: '舌の前部を硬口蓋に向かって最も高い位置に持ち上げる',
+      articulation: {
+        lips: {
+          shape: 'spread',
+          description: '左右に横に引いて笑顔のような形にする',
+        },
+        tongue: {
+          region: 'front',
+          description: '舌の前部を硬口蓋に向かって最も高い位置に持ち上げる',
+        },
+        openness: '狭（閉）',
+      },
       exampleWord: 'feet',
       elsaNotation: '/fit/',
       japaneseApprox: '「イー」（長め）',
-      description: 'この音の発音方法の説明がここに入ります。',
+      pronunciationGuide: {
+        mechanism: 'この音の発音方法の説明がここに入ります。',
+        comparison: '日本語との比較がここに入ります。',
+      },
     }
     expect(isPhoneme(vowel)).toBe(true)
   })
@@ -64,7 +86,7 @@ describe('isPhoneme', () => {
       symbol: 'p',
       displaySymbol: '/p/',
       category: 'consonant',
-      // missing subcategory, exampleWord, elsaNotation, japaneseApprox, description
+      // missing subcategory, articulation, etc.
     }
     expect(isPhoneme(incomplete)).toBe(false)
   })
@@ -79,13 +101,81 @@ describe('isPhoneme', () => {
     expect(isPhoneme(invalid)).toBe(false)
   })
 
-  it('returns false when lipPosition is missing', () => {
-    const { lipPosition, ...withoutLip } = validPhoneme
-    expect(isPhoneme(withoutLip)).toBe(false)
+  it('returns false when articulation is missing', () => {
+    const { articulation, ...withoutArticulation } = validPhoneme
+    expect(isPhoneme(withoutArticulation)).toBe(false)
   })
 
-  it('returns false when tonguePosition is missing', () => {
-    const { tonguePosition, ...withoutTongue } = validPhoneme
-    expect(isPhoneme(withoutTongue)).toBe(false)
+  it('returns false when articulation.lips is missing', () => {
+    const invalid = {
+      ...validPhoneme,
+      articulation: {
+        tongue: validPhoneme.articulation.tongue,
+      },
+    }
+    expect(isPhoneme(invalid)).toBe(false)
+  })
+
+  it('returns false when articulation.tongue is missing', () => {
+    const invalid = {
+      ...validPhoneme,
+      articulation: {
+        lips: validPhoneme.articulation.lips,
+      },
+    }
+    expect(isPhoneme(invalid)).toBe(false)
+  })
+
+  it('returns false when lips.shape is invalid', () => {
+    const invalid = {
+      ...validPhoneme,
+      articulation: {
+        ...validPhoneme.articulation,
+        lips: {
+          shape: 'invalid-shape',
+          description: 'test',
+        },
+      },
+    }
+    expect(isPhoneme(invalid)).toBe(false)
+  })
+
+  it('returns false when tongue.region is invalid', () => {
+    const invalid = {
+      ...validPhoneme,
+      articulation: {
+        ...validPhoneme.articulation,
+        tongue: {
+          region: 'invalid-region',
+          description: 'test',
+        },
+      },
+    }
+    expect(isPhoneme(invalid)).toBe(false)
+  })
+
+  it('returns false when pronunciationGuide is missing', () => {
+    const { pronunciationGuide, ...withoutGuide } = validPhoneme
+    expect(isPhoneme(withoutGuide)).toBe(false)
+  })
+
+  it('returns false when pronunciationGuide.mechanism is missing', () => {
+    const invalid = {
+      ...validPhoneme,
+      pronunciationGuide: {
+        comparison: 'test',
+      },
+    }
+    expect(isPhoneme(invalid)).toBe(false)
+  })
+
+  it('returns false when pronunciationGuide.comparison is missing', () => {
+    const invalid = {
+      ...validPhoneme,
+      pronunciationGuide: {
+        mechanism: 'test',
+      },
+    }
+    expect(isPhoneme(invalid)).toBe(false)
   })
 })

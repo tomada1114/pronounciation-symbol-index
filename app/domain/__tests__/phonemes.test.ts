@@ -101,12 +101,17 @@ describe('ALL_PHONEMES', () => {
         expect(typeof phoneme.elsaNotation).toBe('string')
         expect(phoneme.japaneseApprox).toBeDefined()
         expect(typeof phoneme.japaneseApprox).toBe('string')
-        expect(phoneme.lipPosition).toBeDefined()
-        expect(typeof phoneme.lipPosition).toBe('string')
-        expect(phoneme.tonguePosition).toBeDefined()
-        expect(typeof phoneme.tonguePosition).toBe('string')
-        expect(phoneme.description).toBeDefined()
-        expect(typeof phoneme.description).toBe('string')
+        // New structured fields
+        expect(phoneme.articulation).toBeDefined()
+        expect(phoneme.articulation.lips).toBeDefined()
+        expect(phoneme.articulation.lips.shape).toBeDefined()
+        expect(typeof phoneme.articulation.lips.description).toBe('string')
+        expect(phoneme.articulation.tongue).toBeDefined()
+        expect(phoneme.articulation.tongue.region).toBeDefined()
+        expect(typeof phoneme.articulation.tongue.description).toBe('string')
+        expect(phoneme.pronunciationGuide).toBeDefined()
+        expect(typeof phoneme.pronunciationGuide.mechanism).toBe('string')
+        expect(typeof phoneme.pronunciationGuide.comparison).toBe('string')
       }
     })
 
@@ -139,6 +144,30 @@ describe('ALL_PHONEMES', () => {
     it('each phoneme object is frozen', () => {
       for (const phoneme of ALL_PHONEMES) {
         expect(Object.isFrozen(phoneme)).toBe(true)
+      }
+    })
+
+    it('each articulation object is frozen', () => {
+      for (const phoneme of ALL_PHONEMES) {
+        expect(Object.isFrozen(phoneme.articulation)).toBe(true)
+      }
+    })
+
+    it('each lips sub-object is frozen', () => {
+      for (const phoneme of ALL_PHONEMES) {
+        expect(Object.isFrozen(phoneme.articulation.lips)).toBe(true)
+      }
+    })
+
+    it('each tongue sub-object is frozen', () => {
+      for (const phoneme of ALL_PHONEMES) {
+        expect(Object.isFrozen(phoneme.articulation.tongue)).toBe(true)
+      }
+    })
+
+    it('each pronunciationGuide object is frozen', () => {
+      for (const phoneme of ALL_PHONEMES) {
+        expect(Object.isFrozen(phoneme.pronunciationGuide)).toBe(true)
       }
     })
   })
