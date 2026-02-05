@@ -22,6 +22,8 @@ export interface Phoneme {
   readonly articulationPoint?: string
   readonly openness?: string
   readonly movement?: string
+  readonly lipPosition: string
+  readonly tonguePosition: string
   readonly exampleWord: string
   readonly elsaNotation: string
   readonly japaneseApprox: string
@@ -63,6 +65,8 @@ export function isPhoneme(value: unknown): value is Phoneme {
     VALID_CATEGORIES.has(obj.category) &&
     typeof obj.subcategory === 'string' &&
     VALID_SUBCATEGORIES.has(obj.subcategory) &&
+    typeof obj.lipPosition === 'string' &&
+    typeof obj.tonguePosition === 'string' &&
     typeof obj.exampleWord === 'string' &&
     typeof obj.elsaNotation === 'string' &&
     typeof obj.japaneseApprox === 'string' &&
