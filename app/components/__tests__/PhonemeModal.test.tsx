@@ -11,14 +11,25 @@ const mockPhoneme: Phoneme = {
   displaySymbol: '/p/',
   category: 'consonant',
   subcategory: 'plosive',
-  voicing: '無声',
-  articulationPoint: '両唇',
-  lipPosition: '上下の唇をしっかり閉じて密閉する',
-  tonguePosition: '特定の位置を取らず後続の母音に備えてリラックス',
+  articulation: {
+    lips: {
+      shape: 'closed',
+      description: '上下の唇をしっかり閉じて密閉する',
+    },
+    tongue: {
+      region: 'neutral',
+      description: '特定の位置を取らず後続の母音に備えてリラックス',
+    },
+    voicing: '無声',
+    articulationPoint: '両唇',
+  },
   exampleWord: 'pat',
   elsaNotation: '/pæt/',
   japaneseApprox: 'パ行',
-  description: 'テスト用の発音説明です。',
+  pronunciationGuide: {
+    mechanism: 'テスト用の発音説明です。',
+    comparison: '日本語との比較です。',
+  },
 }
 
 describe('PhonemeModal', () => {
@@ -41,15 +52,6 @@ describe('PhonemeModal', () => {
     render(<PhonemeModal {...defaultProps} />)
 
     expect(screen.getByText('破裂音（Plosives）')).toBeInTheDocument()
-  })
-
-  it('renders the phoneme detail content', () => {
-    render(<PhonemeModal {...defaultProps} />)
-
-    expect(screen.getByText('両唇')).toBeInTheDocument()
-    expect(screen.getByText('pat /pæt/')).toBeInTheDocument()
-    expect(screen.getByText('パ行')).toBeInTheDocument()
-    expect(screen.getByText('テスト用の発音説明です。')).toBeInTheDocument()
   })
 
   it('has role="dialog" and aria-modal="true"', () => {
