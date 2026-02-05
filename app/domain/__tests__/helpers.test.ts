@@ -1,6 +1,35 @@
 import { describe, expect, it } from 'vitest'
-import { getPhonemesByCategory, getSubcategoryLabel, groupBySubcategory } from '../helpers'
+import {
+  ORDERED_CATEGORIES,
+  getPhonemesByCategory,
+  getSubcategoryLabel,
+  groupBySubcategory,
+} from '../helpers'
 import type { Subcategory } from '../types'
+
+describe('ORDERED_CATEGORIES', () => {
+  it('has exactly 4 categories', () => {
+    expect(ORDERED_CATEGORIES).toHaveLength(4)
+  })
+
+  it('is in the correct order', () => {
+    expect(ORDERED_CATEGORIES.map((c) => c.category)).toEqual([
+      'consonant',
+      'monophthong',
+      'diphthong',
+      'r-colored',
+    ])
+  })
+
+  it('has Japanese labels for each category', () => {
+    expect(ORDERED_CATEGORIES.map((c) => c.label)).toEqual([
+      '子音',
+      '単母音',
+      '二重母音',
+      'R母音',
+    ])
+  })
+})
 
 describe('getPhonemesByCategory', () => {
   it('returns 24 consonants', () => {

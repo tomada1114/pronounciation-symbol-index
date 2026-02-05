@@ -1,6 +1,14 @@
 import { ALL_PHONEMES } from './phonemes'
 import type { Category, Phoneme, Subcategory } from './types'
 
+export const ORDERED_CATEGORIES: readonly { readonly category: Category; readonly label: string }[] =
+  [
+    { category: 'consonant', label: '子音' },
+    { category: 'monophthong', label: '単母音' },
+    { category: 'diphthong', label: '二重母音' },
+    { category: 'r-colored', label: 'R母音' },
+  ]
+
 export function getPhonemesByCategory(category: Category): Phoneme[] {
   return ALL_PHONEMES.filter((p) => p.category === category)
 }
