@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
@@ -33,33 +33,66 @@ describe('Page integration', () => {
     expect(tabs[3]).toHaveTextContent('R母音')
   })
 
-  it('shows consonant tab content by default', () => {
+  it('shows consonant tab as active by default', () => {
     render(<Page />)
 
     const consonantTab = screen.getByRole('tab', { name: '子音' })
     expect(consonantTab).toHaveAttribute('aria-selected', 'true')
   })
 
-  it('displays Plosives section in default consonant tab', () => {
+  it('renders all 4 tabpanels', () => {
+    render(<Page />)
+
+    const panels = screen.getAllByRole('tabpanel')
+    expect(panels).toHaveLength(4)
+    expect(panels[0]).toHaveAttribute('id', 'panel-consonant')
+    expect(panels[1]).toHaveAttribute('id', 'panel-monophthong')
+    expect(panels[2]).toHaveAttribute('id', 'panel-diphthong')
+    expect(panels[3]).toHaveAttribute('id', 'panel-r-colored')
+  })
+
+  it('renders correct number of phoneme cards per panel', () => {
+    render(<Page />)
+
+    const panels = screen.getAllByRole('tabpanel')
+    const consonantCards = within(panels[0]).getAllByRole('button', { name: /^\// })
+    const monophthongCards = within(panels[1]).getAllByRole('button', { name: /^\// })
+    const diphthongCards = within(panels[2]).getAllByRole('button', { name: /^\// })
+    const rColoredCards = within(panels[3]).getAllByRole('button', { name: /^\// })
+
+    expect(consonantCards).toHaveLength(24)
+    expect(monophthongCards).toHaveLength(11)
+    expect(diphthongCards).toHaveLength(5)
+    expect(rColoredCards).toHaveLength(7)
+  })
+
+  it('displays all 47 phoneme cards across all panels', () => {
+    render(<Page />)
+
+    const allCards = screen.getAllByRole('button', { name: /^\// })
+    expect(allCards).toHaveLength(47)
+  })
+
+  it('displays Plosives section in consonant panel', () => {
     render(<Page />)
 
     expect(screen.getByRole('heading', { name: /破裂音（Plosives）/ })).toBeInTheDocument()
   })
 
-  it('displays 24 phoneme cards in consonant tab', () => {
+  it('displays Front Vowels section in monophthong panel', () => {
     render(<Page />)
-
-    const buttons = screen.getAllByRole('button', { name: /^\// })
-    expect(buttons).toHaveLength(24)
-  })
-
-  it('shows Front Vowels section when clicking monophthong tab', async () => {
-    const user = userEvent.setup()
-    render(<Page />)
-
-    await user.click(screen.getByRole('tab', { name: '単母音' }))
 
     expect(screen.getByRole('heading', { name: /前舌母音（Front Vowels）/ })).toBeInTheDocument()
+  })
+
+  it('links tabpanels to tabs via aria-labelledby', () => {
+    render(<Page />)
+
+    const panels = screen.getAllByRole('tabpanel')
+    expect(panels[0]).toHaveAttribute('aria-labelledby', 'tab-consonant')
+    expect(panels[1]).toHaveAttribute('aria-labelledby', 'tab-monophthong')
+    expect(panels[2]).toHaveAttribute('aria-labelledby', 'tab-diphthong')
+    expect(panels[3]).toHaveAttribute('aria-labelledby', 'tab-r-colored')
   })
 
   it('opens a modal when a card is clicked', async () => {
