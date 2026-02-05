@@ -101,6 +101,10 @@ describe('ALL_PHONEMES', () => {
         expect(typeof phoneme.elsaNotation).toBe('string')
         expect(phoneme.japaneseApprox).toBeDefined()
         expect(typeof phoneme.japaneseApprox).toBe('string')
+        expect(phoneme.lipPosition).toBeDefined()
+        expect(typeof phoneme.lipPosition).toBe('string')
+        expect(phoneme.tonguePosition).toBeDefined()
+        expect(typeof phoneme.tonguePosition).toBe('string')
         expect(phoneme.description).toBeDefined()
         expect(typeof phoneme.description).toBe('string')
       }

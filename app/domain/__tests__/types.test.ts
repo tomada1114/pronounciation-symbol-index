@@ -10,6 +10,8 @@ describe('isPhoneme', () => {
     subcategory: 'plosive',
     voicing: '無声',
     articulationPoint: '両唇',
+    lipPosition: '上下の唇をしっかり閉じて密閉する',
+    tonguePosition: '特定の位置を取らず後続の母音に備えてリラックス',
     exampleWord: 'pat',
     elsaNotation: '/pæt/',
     japaneseApprox: 'パ行',
@@ -27,6 +29,8 @@ describe('isPhoneme', () => {
       category: 'monophthong',
       subcategory: 'front-vowel',
       openness: '狭（閉）',
+      lipPosition: '左右に横に引いて笑顔のような形にする',
+      tonguePosition: '舌の前部を硬口蓋に向かって最も高い位置に持ち上げる',
       exampleWord: 'feet',
       elsaNotation: '/fit/',
       japaneseApprox: '「イー」（長め）',
@@ -73,5 +77,15 @@ describe('isPhoneme', () => {
   it('returns false when category is not a valid Category', () => {
     const invalid = { ...validPhoneme, category: 'invalid' }
     expect(isPhoneme(invalid)).toBe(false)
+  })
+
+  it('returns false when lipPosition is missing', () => {
+    const { lipPosition, ...withoutLip } = validPhoneme
+    expect(isPhoneme(withoutLip)).toBe(false)
+  })
+
+  it('returns false when tonguePosition is missing', () => {
+    const { tonguePosition, ...withoutTongue } = validPhoneme
+    expect(isPhoneme(withoutTongue)).toBe(false)
   })
 })

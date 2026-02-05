@@ -13,6 +13,8 @@ const mockPhoneme: Phoneme = {
   subcategory: 'plosive',
   voicing: '無声',
   articulationPoint: '両唇',
+  lipPosition: '上下の唇をしっかり閉じて密閉する',
+  tonguePosition: '特定の位置を取らず後続の母音に備えてリラックス',
   exampleWord: 'pat',
   elsaNotation: '/pæt/',
   japaneseApprox: 'パ行',
