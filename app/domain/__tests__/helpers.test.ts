@@ -5,9 +5,10 @@ import {
   getPhonemesByCategory,
   getSubcategoryLabel,
   getTongueRegionLabel,
+  getTongueTargetLabel,
   groupBySubcategory,
 } from '../helpers'
-import type { LipShape, Subcategory, TongueRegion } from '../types'
+import type { LipShape, Subcategory, TongueRegion, TongueTarget } from '../types'
 
 describe('ORDERED_CATEGORIES', () => {
   it('has exactly 4 categories', () => {
@@ -329,6 +330,76 @@ describe('getTongueRegionLabel', () => {
 
     for (const region of allTongueRegions) {
       const label = getTongueRegionLabel(region)
+      expect(label).toBeDefined()
+      expect(typeof label.ja).toBe('string')
+      expect(typeof label.en).toBe('string')
+    }
+  })
+})
+
+describe('getTongueTargetLabel', () => {
+  it('returns correct label for alveolar', () => {
+    expect(getTongueTargetLabel('alveolar')).toEqual({
+      ja: '歯茎',
+      en: 'Alveolar',
+    })
+  })
+
+  it('returns correct label for post-alveolar', () => {
+    expect(getTongueTargetLabel('post-alveolar')).toEqual({
+      ja: '後部歯茎',
+      en: 'Post-alveolar',
+    })
+  })
+
+  it('returns correct label for palatal', () => {
+    expect(getTongueTargetLabel('palatal')).toEqual({
+      ja: '硬口蓋',
+      en: 'Palatal',
+    })
+  })
+
+  it('returns correct label for velar', () => {
+    expect(getTongueTargetLabel('velar')).toEqual({
+      ja: '軟口蓋',
+      en: 'Velar',
+    })
+  })
+
+  it('returns correct label for dental', () => {
+    expect(getTongueTargetLabel('dental')).toEqual({
+      ja: '歯',
+      en: 'Dental',
+    })
+  })
+
+  it('returns correct label for interdental', () => {
+    expect(getTongueTargetLabel('interdental')).toEqual({
+      ja: '歯間',
+      en: 'Interdental',
+    })
+  })
+
+  it('returns correct label for none', () => {
+    expect(getTongueTargetLabel('none')).toEqual({
+      ja: 'なし',
+      en: 'None',
+    })
+  })
+
+  it('returns a label for every TongueTarget value', () => {
+    const allTongueTargets: TongueTarget[] = [
+      'alveolar',
+      'post-alveolar',
+      'palatal',
+      'velar',
+      'dental',
+      'interdental',
+      'none',
+    ]
+
+    for (const target of allTongueTargets) {
+      const label = getTongueTargetLabel(target)
       expect(label).toBeDefined()
       expect(typeof label.ja).toBe('string')
       expect(typeof label.en).toBe('string')
