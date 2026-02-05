@@ -17,44 +17,77 @@ pnpm typecheck        # TypeScript check (no emit)
 
 ## Architecture
 
-Single-page Next.js 16 App Router application — a pronunciation symbol reference for American English (47 IPA phonemes). No API calls; all data is static and frozen.
+Next.js 16 App Router application — a pronunciation symbol reference for American English (47 IPA phonemes). Swipe-based navigation with modal details. Data stored in localStorage for "difficult phonemes" bookmarking.
 
 ### Layer Structure (Onion / DDD)
 
 ```
 app/
 ├── domain/           # Pure business logic, types, immutable data
-│   ├── types.ts      # Phoneme interface, type guards, branded types
+│   ├── types.ts      # Phoneme, Category, Subcategory, LipShape, TongueRegion types
 │   ├── phonemes.ts   # 47 frozen phoneme objects (ALL_PHONEMES)
-│   └── helpers.ts    # Pure functions: filtering, grouping, labeling
+│   ├── helpers.ts    # Filtering, grouping, label functions
+│   └── bookmark.ts   # getPhonemesBySymbols() for bookmark filtering
+├── hooks/            # Custom React hooks
+│   ├── useDifficultPhonemes.ts  # localStorage sync with useSyncExternalStore
+│   └── useScrollSnap.ts         # Swipe navigation with IntersectionObserver
 ├── components/       # Client-side React components (presentation)
-│   ├── TabBar.tsx    # Category tab navigation (4 tabs)
-│   ├── SectionGroup.tsx  # Groups phonemes by subcategory
-│   ├── PhonemeCard.tsx   # Expandable phoneme card
-│   └── PhonemeDetail.tsx # Expanded card detail content
-├── page.tsx          # Home page — integrates domain + components
+│   ├── CategoryIndicator.tsx  # Category tabs (synced with swipe)
+│   ├── SectionGroup.tsx       # Groups phonemes by subcategory
+│   ├── PhonemeCard.tsx        # Phoneme card (tap to open modal)
+│   ├── PhonemeModal.tsx       # Modal with portal + animations
+│   ├── PhonemeDetail.tsx      # Detail content inside modal
+│   ├── ArticulationTag.tsx    # Lip/tongue/voicing tags
+│   ├── DetailSection.tsx      # Reusable detail section wrapper
+│   └── BookmarkButton.tsx     # Star toggle for "difficult" bookmark
+├── difficult/        # Difficult phonemes page
+│   └── page.tsx      # Lists bookmarked phonemes
+├── page.tsx          # Home page — swipe panels + modal
 ├── layout.tsx        # Root layout with Noto Sans / Noto Sans JP fonts
-└── globals.css       # Design tokens as CSS custom properties
+└── globals.css       # Design tokens + swipe/modal animations
 ```
+
+### Routes
+
+- `/` — Main phoneme index with swipe navigation between categories
+- `/difficult` — "Difficult phonemes" list (bookmarked items)
 
 ### Key Patterns
 
-- **Immutability everywhere**: `ALL_PHONEMES` is deeply `Object.freeze`d. State uses `new Set(prev)` to avoid mutation. Props use `readonly` and `ReadonlySet`.
-- **CSS custom properties for theming**: Dark-only design system defined in `globals.css` (`--bg-primary`, `--text-primary`, `--accent-primary`, etc.). Components reference these via inline `style` with `var()`.
-- **Bilingual labels**: `getSubcategoryLabel()` returns `{ ja, en }` pairs. Section headings display as `日本語（English）`.
-- **Accessibility**: ARIA roles (`tablist`, `tab`, `tabpanel`), `aria-selected`, `aria-expanded` on all interactive elements.
+- **Immutability**: `ALL_PHONEMES` is deeply `Object.freeze`d. State uses `new Set(prev)`. Props use `readonly`.
+- **Structured articulation data**: `Articulation` contains `LipArticulation` (shape + description) and `TongueArticulation` (region + description).
+- **Swipe navigation**: CSS scroll-snap (`swipe-container`, `swipe-panel`) + IntersectionObserver to sync tab indicator.
+- **Modal with portal**: `PhonemeModal` uses `createPortal` to render outside component tree, with CSS keyframe animations.
+- **localStorage sync**: `useDifficultPhonemes` uses `useSyncExternalStore` for cross-tab sync and SSR safety.
+- **CSS custom properties**: Dark-only design in `globals.css`. Components use inline `style` with `var()`.
+- **Bilingual labels**: `getSubcategoryLabel()`, `getLipShapeLabel()`, `getTongueRegionLabel()` return `{ ja, en }`.
 
 ### Data Model
 
-4 categories with subcategories: consonant (24: plosive/fricative/affricate/nasal/liquid/glide), monophthong (11: front/central/back vowels), diphthong (5), r-colored (7).
+4 categories: consonant (24), monophthong (11), diphthong (5), r-colored (7).
+
+Type hierarchy:
+```
+Phoneme
+├── symbol, displaySymbol
+├── category: Category
+├── subcategory: Subcategory
+├── articulation: Articulation
+│   ├── lips: LipArticulation { shape: LipShape, description }
+│   ├── tongue: TongueArticulation { region: TongueRegion, description }
+│   └── voicing?, articulationPoint?, openness?, movement?
+├── exampleWord, elsaNotation, japaneseApprox
+└── pronunciationGuide: { mechanism, comparison }
+```
 
 ## Testing
 
-Vitest + React Testing Library + jsdom. Tests co-located in `__tests__/` directories at each level.
+Vitest + React Testing Library + jsdom. Tests co-located in `__tests__/` directories.
 
-- **Domain tests**: Type guards, pure function behavior, immutability verification (frozen checks)
-- **Component tests**: Rendering, user interactions via `userEvent`, ARIA attributes
-- **Integration tests** (`app/__tests__/page.test.tsx`): Full page flow — tab switching, card expansion
+- **Domain tests**: Type guards, pure functions, immutability
+- **Hook tests**: `useDifficultPhonemes`, `useScrollSnap` behavior
+- **Component tests**: Rendering, interactions, ARIA attributes
+- **Integration tests**: Full page flows
 
 Pattern: `afterEach(cleanup)`, `vi.fn()` for callbacks, `userEvent.setup()` for interactions.
 
