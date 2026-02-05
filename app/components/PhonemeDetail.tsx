@@ -29,6 +29,8 @@ export function PhonemeDetail({ phoneme }: PhonemeDetailProps) {
       {phoneme.voicing && <DetailRow label="有声/無声" value={phoneme.voicing} />}
       {phoneme.openness && <DetailRow label="開口度" value={phoneme.openness} />}
       {phoneme.movement && <DetailRow label="動き" value={phoneme.movement} />}
+      <DetailRow label="唇" value={phoneme.lipPosition} />
+      <DetailRow label="舌" value={phoneme.tonguePosition} />
       <DetailRow label="例語" value={`${phoneme.exampleWord} ${phoneme.elsaNotation}`} />
       <DetailRow label="近似音" value={phoneme.japaneseApprox} />
 
