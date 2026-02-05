@@ -1,5 +1,5 @@
 import { ALL_PHONEMES } from './phonemes'
-import type { Category, Phoneme, Subcategory } from './types'
+import type { Category, LipShape, Phoneme, Subcategory, TongueRegion } from './types'
 
 export const ORDERED_CATEGORIES: readonly { readonly category: Category; readonly label: string }[] =
   [
@@ -41,4 +41,31 @@ const SUBCATEGORY_LABELS: Record<Subcategory, { ja: string; en: string }> = {
 
 export function getSubcategoryLabel(subcategory: Subcategory): { ja: string; en: string } {
   return SUBCATEGORY_LABELS[subcategory]
+}
+
+const LIP_SHAPE_LABELS: Record<LipShape, { ja: string; en: string }> = {
+  closed: { ja: '閉じる', en: 'Closed' },
+  rounded: { ja: '丸める', en: 'Rounded' },
+  spread: { ja: '横引き', en: 'Spread' },
+  labiodental: { ja: '歯+唇', en: 'Labiodental' },
+  neutral: { ja: '自然', en: 'Neutral' },
+  dynamic: { ja: '変化', en: 'Dynamic' },
+}
+
+const TONGUE_REGION_LABELS: Record<TongueRegion, { ja: string; en: string }> = {
+  tip: { ja: '舌先', en: 'Tip' },
+  blade: { ja: '前方', en: 'Blade' },
+  front: { ja: '前部', en: 'Front' },
+  center: { ja: '中央', en: 'Center' },
+  back: { ja: '舌の奥', en: 'Back' },
+  neutral: { ja: '特定なし', en: 'Neutral' },
+  dynamic: { ja: '変化', en: 'Dynamic' },
+}
+
+export function getLipShapeLabel(shape: LipShape): { ja: string; en: string } {
+  return LIP_SHAPE_LABELS[shape]
+}
+
+export function getTongueRegionLabel(region: TongueRegion): { ja: string; en: string } {
+  return TONGUE_REGION_LABELS[region]
 }
