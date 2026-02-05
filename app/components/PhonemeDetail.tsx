@@ -1,6 +1,6 @@
 'use client'
 
-import { getLipShapeLabel, getTongueRegionLabel } from '@/app/domain/helpers'
+import { getLipShapeLabel, getTongueRegionLabel, getTongueTargetLabel } from '@/app/domain/helpers'
 import type { Phoneme } from '@/app/domain/types'
 
 import { ArticulationTag } from './ArticulationTag'
@@ -30,6 +30,9 @@ export function PhonemeDetail({ phoneme }: PhonemeDetailProps) {
   const { articulation, pronunciationGuide } = phoneme
   const lipLabel = getLipShapeLabel(articulation.lips.shape)
   const tongueLabel = getTongueRegionLabel(articulation.tongue.region)
+  const tongueTargetLabel = articulation.tongue.target
+    ? getTongueTargetLabel(articulation.tongue.target)
+    : null
 
   return (
     <div className="flex flex-col gap-3">
@@ -37,6 +40,9 @@ export function PhonemeDetail({ phoneme }: PhonemeDetailProps) {
       <div className="flex flex-wrap gap-2">
         <ArticulationTag label={`唇: ${lipLabel.ja}`} variant="lip" />
         <ArticulationTag label={`舌: ${tongueLabel.ja}`} variant="tongue" />
+        {tongueTargetLabel && tongueTargetLabel.ja !== 'なし' && (
+          <ArticulationTag label={`→ ${tongueTargetLabel.ja}`} variant="tongue" />
+        )}
         {articulation.voicing && (
           <ArticulationTag label={articulation.voicing} variant="voicing" />
         )}
