@@ -1,6 +1,10 @@
 'use client'
 
+import { getLipShapeLabel, getTongueRegionLabel } from '@/app/domain/helpers'
 import type { Phoneme } from '@/app/domain/types'
+
+import { ArticulationTag } from './ArticulationTag'
+import { DetailSection } from './DetailSection'
 
 interface PhonemeDetailProps {
   readonly phoneme: Phoneme
@@ -23,33 +27,55 @@ function DetailRow({ label, value }: { readonly label: string; readonly value: s
 }
 
 export function PhonemeDetail({ phoneme }: PhonemeDetailProps) {
-  return (
-    <div className="mt-3 flex flex-col gap-2">
-      {phoneme.articulationPoint && <DetailRow label="調音点" value={phoneme.articulationPoint} />}
-      {phoneme.voicing && <DetailRow label="有声/無声" value={phoneme.voicing} />}
-      {phoneme.openness && <DetailRow label="開口度" value={phoneme.openness} />}
-      {phoneme.movement && <DetailRow label="動き" value={phoneme.movement} />}
-      <DetailRow label="唇" value={phoneme.lipPosition} />
-      <DetailRow label="舌" value={phoneme.tonguePosition} />
-      <DetailRow label="例語" value={`${phoneme.exampleWord} ${phoneme.elsaNotation}`} />
-      <DetailRow label="近似音" value={phoneme.japaneseApprox} />
+  const { articulation, pronunciationGuide } = phoneme
+  const lipLabel = getLipShapeLabel(articulation.lips.shape)
+  const tongueLabel = getTongueRegionLabel(articulation.tongue.region)
 
-      <div className="mt-3">
-        <p className="text-sm font-semibold" style={{ color: 'var(--text-secondary, #A1A1AA)' }}>
-          発音の仕方
-        </p>
-        <div className="mt-1 flex flex-col gap-2">
-          {phoneme.description.split('\n\n').map((paragraph, index) => (
-            <p
-              key={index}
-              className="text-base leading-relaxed"
-              style={{ color: 'var(--text-secondary, #A1A1AA)' }}
-            >
-              {paragraph}
-            </p>
-          ))}
-        </div>
+  return (
+    <div className="flex flex-col gap-3">
+      {/* Tags row */}
+      <div className="flex flex-wrap gap-2">
+        <ArticulationTag label={`唇: ${lipLabel.ja}`} variant="lip" />
+        <ArticulationTag label={`舌: ${tongueLabel.ja}`} variant="tongue" />
+        {articulation.voicing && (
+          <ArticulationTag label={articulation.voicing} variant="voicing" />
+        )}
       </div>
+
+      {/* Articulation details */}
+      <DetailSection title="口の構え">
+        <div className="flex flex-col gap-1.5">
+          {articulation.articulationPoint && (
+            <DetailRow label="調音点" value={articulation.articulationPoint} />
+          )}
+          {articulation.openness && <DetailRow label="開口度" value={articulation.openness} />}
+          {articulation.movement && <DetailRow label="動き" value={articulation.movement} />}
+          <DetailRow label="唇" value={articulation.lips.description} />
+          <DetailRow label="舌" value={articulation.tongue.description} />
+        </div>
+      </DetailSection>
+
+      {/* Pronunciation mechanism */}
+      <DetailSection title="発音のメカニズム">
+        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary, #A1A1AA)' }}>
+          {pronunciationGuide.mechanism}
+        </p>
+      </DetailSection>
+
+      {/* Japanese comparison */}
+      <DetailSection title="日本語との比較">
+        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary, #A1A1AA)' }}>
+          {pronunciationGuide.comparison}
+        </p>
+      </DetailSection>
+
+      {/* Reference */}
+      <DetailSection title="参考">
+        <div className="flex flex-col gap-1.5">
+          <DetailRow label="例語" value={`${phoneme.exampleWord} ${phoneme.elsaNotation}`} />
+          <DetailRow label="近似音" value={phoneme.japaneseApprox} />
+        </div>
+      </DetailSection>
     </div>
   )
 }
