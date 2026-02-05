@@ -17,6 +17,15 @@ export type LipShape = 'closed' | 'rounded' | 'spread' | 'labiodental' | 'neutra
 
 export type TongueRegion = 'tip' | 'blade' | 'front' | 'center' | 'back' | 'neutral' | 'dynamic'
 
+export type TongueTarget =
+  | 'alveolar' // 歯茎
+  | 'post-alveolar' // 後部歯茎
+  | 'palatal' // 硬口蓋
+  | 'velar' // 軟口蓋
+  | 'dental' // 歯
+  | 'interdental' // 歯間
+  | 'none' // 接触なし
+
 export interface LipArticulation {
   readonly shape: LipShape
   readonly description: string
@@ -24,6 +33,7 @@ export interface LipArticulation {
 
 export interface TongueArticulation {
   readonly region: TongueRegion
+  readonly target?: TongueTarget
   readonly description: string
 }
 
@@ -93,6 +103,16 @@ const VALID_TONGUE_REGIONS: ReadonlySet<string> = new Set<TongueRegion>([
   'dynamic',
 ])
 
+const VALID_TONGUE_TARGETS: ReadonlySet<string> = new Set<TongueTarget>([
+  'alveolar',
+  'post-alveolar',
+  'palatal',
+  'velar',
+  'dental',
+  'interdental',
+  'none',
+])
+
 function isValidArticulation(value: unknown): value is Articulation {
   if (value === null || value === undefined || typeof value !== 'object') {
     return false
@@ -123,6 +143,10 @@ function isValidArticulation(value: unknown): value is Articulation {
     !VALID_TONGUE_REGIONS.has(tongue.region) ||
     typeof tongue.description !== 'string'
   ) {
+    return false
+  }
+  // target is optional, but if present must be valid
+  if (tongue.target !== undefined && !VALID_TONGUE_TARGETS.has(tongue.target as string)) {
     return false
   }
 
