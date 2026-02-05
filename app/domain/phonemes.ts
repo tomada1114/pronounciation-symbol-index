@@ -24,7 +24,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'neutral',
-        description: '特定の位置を取らず後続の母音に備えてリラックス',
+        target: 'none',
+        description:
+          '舌は特定の位置を取りません。後続の母音の発音に備えて、口の中でリラックスした状態で待機します。',
       },
       voicing: '無声',
       articulationPoint: '両唇',
@@ -51,7 +53,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'neutral',
-        description: '特定の位置を取らず後続の母音に備えてリラックス',
+        target: 'none',
+        description:
+          '舌は特定の位置を取りません。後続の母音の発音に備えて、口の中でリラックスした状態で待機します。',
       },
       voicing: '有声',
       articulationPoint: '両唇',
@@ -78,7 +82,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'tip',
-        description: '舌先を上の歯茎にしっかり当てる',
+        target: 'alveolar',
+        description:
+          '舌先の裏側を上の歯茎（上前歯のすぐ後ろの出っ張り部分）にしっかり当てて、空気の流れを完全に止めます。舌先は歯には触れず、歯茎のやや後ろに位置します。',
       },
       voicing: '無声',
       articulationPoint: '歯茎',
@@ -105,7 +111,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'tip',
-        description: '舌先を上の歯茎にしっかり当てる',
+        target: 'alveolar',
+        description:
+          '舌先の裏側を上の歯茎（上前歯のすぐ後ろの出っ張り部分）にしっかり当てて、空気の流れを完全に止めます。/t/と同じ舌の位置ですが、声帯を振動させながら発音します。',
       },
       voicing: '有声',
       articulationPoint: '歯茎',
@@ -132,7 +140,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'back',
-        description: '舌の奥を軟口蓋に押し当てて空気を遮断する',
+        target: 'velar',
+        description:
+          '舌の後ろ側（奥の部分）を軟口蓋（口の天井の柔らかい奥の部分）に押し当てて、空気の流れを完全に止めます。舌先は下の前歯の裏あたりに自然に置いたままです。',
       },
       voicing: '無声',
       articulationPoint: '軟口蓋',
@@ -159,7 +169,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'back',
-        description: '舌の奥を軟口蓋に押し当てる',
+        target: 'velar',
+        description:
+          '舌の後ろ側（奥の部分）を軟口蓋（口の天井の柔らかい奥の部分）に押し当てて、空気の流れを完全に止めます。/k/と同じ舌の位置ですが、声帯を振動させながら発音します。',
       },
       voicing: '有声',
       articulationPoint: '軟口蓋',
@@ -188,7 +200,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'neutral',
-        description: '特定の位置は取らず自然にリラックス',
+        target: 'none',
+        description:
+          '舌は特定の位置を取りません。この音は唇と歯で作るため、舌は口の中で自然にリラックスした状態で待機します。',
       },
       voicing: '無声',
       articulationPoint: '唇歯',
@@ -215,7 +229,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'neutral',
-        description: '自然な位置でリラックス',
+        target: 'none',
+        description:
+          '舌は特定の位置を取りません。この音は唇と歯で作るため、舌は口の中で自然にリラックスした状態で待機します。',
       },
       voicing: '有声',
       articulationPoint: '唇歯',
@@ -242,7 +258,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'tip',
-        description: '舌先を上下の前歯の間から2〜3mm出し、上の前歯の先端に軽く当てる',
+        target: 'interdental',
+        description:
+          '舌先を上下の前歯の間からわずかに出し（2〜3mm程度）、上の前歯の先端に軽く当てます。舌と前歯の間のわずかな隙間から息を漏らして摩擦音を作ります。鏡で見ると舌先が歯の間から少し見えるはずです。',
       },
       voicing: '無声',
       articulationPoint: '歯',
@@ -269,7 +287,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'tip',
-        description: '舌先を上下の前歯の間に軽く出し、上の前歯の先端に当てる',
+        target: 'interdental',
+        description:
+          '舌先を上下の前歯の間からわずかに出し、上の前歯の先端に軽く当てます。/θ/と同じ舌の位置ですが、声帯を振動させながら発音します。舌先が前歯の間でビリビリ振動する感覚があれば正しく出せています。',
       },
       voicing: '有声',
       articulationPoint: '歯',
@@ -296,7 +316,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'tip',
-        description: '舌先を上の歯茎に非常に近づけるが触れさせない',
+        target: 'alveolar',
+        description:
+          '舌先を上の歯茎に非常に近づけますが、触れさせません。この狭い隙間に息を通して鋭い摩擦音を作ります。舌の両側は上の奥歯に触れて空気を中央に集中させ、舌の中央に浅い溝を作ります。',
       },
       voicing: '無声',
       articulationPoint: '歯茎',
@@ -323,7 +345,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'tip',
-        description: '舌先を歯茎に近づけて狭い隙間を作る',
+        target: 'alveolar',
+        description:
+          '舌先を上の歯茎に非常に近づけますが、触れさせません。/s/と同じ舌の位置で、狭い隙間から声帯を振動させた息を出して有声摩擦音を作ります。舌の両側は上の奥歯に触れて空気を中央に集中させます。',
       },
       voicing: '有声',
       articulationPoint: '歯茎',
@@ -350,7 +374,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'blade',
-        description: '舌の前方部分を後部歯茎に近づけ、舌の中央にやや広い溝を作る',
+        target: 'post-alveolar',
+        description:
+          '舌の前方部分（舌先のやや後ろ）を後部歯茎（歯茎と硬口蓋の境目あたり）に近づけます。舌先は歯茎にほぼ触れない程度の位置で、舌の中央にやや広い溝を作って空気を通します。/s/より舌の位置が後ろで、音がこもった感じになります。',
       },
       voicing: '無声',
       articulationPoint: '後部歯茎',
@@ -377,7 +403,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'blade',
-        description: '舌の前方部分を後部歯茎に近づける',
+        target: 'post-alveolar',
+        description:
+          '舌の前方部分（舌先のやや後ろ）を後部歯茎に近づけます。/ʃ/と同じ舌の位置で、声帯を振動させながら摩擦音を作ります。純粋な摩擦音なので、舌を上あごに当てて離す動作はありません。',
       },
       voicing: '有声',
       articulationPoint: '後部歯茎',
@@ -404,7 +432,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'neutral',
-        description: '特定の位置を取らず後続の母音の位置に準備する',
+        target: 'none',
+        description:
+          '舌は特定の位置を取りません。この音は喉の奥（声門）で作るため、舌は後続の母音の位置に備えて準備します。舌の形は次に来る母音によって変わります。',
       },
       voicing: '無声',
       articulationPoint: '声門',
@@ -433,7 +463,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'blade',
-        description: '舌先から前方部分を後部歯茎に広く当てて閉鎖し、ゆっくり離す',
+        target: 'post-alveolar',
+        description:
+          '舌先から前方部分を後部歯茎に広く当てて、空気を完全に止めます。その後、ゆっくりと舌を離して/ʃ/の摩擦音に移行します。この「止める→摩擦」の2段階が一つの音として融合した破擦音です。',
       },
       voicing: '無声',
       articulationPoint: '後部歯茎',
@@ -460,7 +492,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'blade',
-        description: '舌の前方部分を後部歯茎に当てて閉鎖し、声を出しながらゆっくり離す',
+        target: 'post-alveolar',
+        description:
+          '舌の前方部分を後部歯茎に当てて、空気を完全に止めます。/tʃ/と同じ舌の位置で、声帯を振動させながら「止める→摩擦」の動作を行います。全体を通して声帯の振動を維持する有声破擦音です。',
       },
       voicing: '有声',
       articulationPoint: '後部歯茎',
@@ -489,7 +523,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'neutral',
-        description: '特定の位置は取らずリラックスした状態',
+        target: 'none',
+        description:
+          '舌は特定の位置を取りません。この音は唇を閉じて作る鼻音なので、舌は口の中でリラックスした状態です。声は鼻から出ます。',
       },
       voicing: '有声',
       articulationPoint: '両唇',
@@ -516,7 +552,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'tip',
-        description: '舌先を上の歯茎にしっかり当て口からの空気の流れを遮断する',
+        target: 'alveolar',
+        description:
+          '舌先を上の歯茎にしっかり当てて、口からの空気の流れを完全に遮断します。舌の両側も上の歯の内側に触れて口腔を完全に塞ぎ、声は鼻腔を通って出ます。舌先が触れるのは歯ではなく歯茎です。',
       },
       voicing: '有声',
       articulationPoint: '歯茎',
@@ -543,7 +581,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'back',
-        description: '舌の奥を軟口蓋に当てて口からの空気を遮断する',
+        target: 'velar',
+        description:
+          '舌の後ろ側（奥の部分）を軟口蓋に当てて、口からの空気の流れを完全に遮断します。舌先は下の歯の裏あたりに自然に置いたままで、声は鼻腔を通って出ます。/k/や/g/と同じ接触点ですが、鼻音なので声が鼻に抜けます。',
       },
       voicing: '有声',
       articulationPoint: '軟口蓋',
@@ -572,7 +612,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'tip',
-        description: '舌先を上の歯茎にしっかり当て、その状態を維持したまま舌の側面から空気を流す',
+        target: 'alveolar',
+        description:
+          '舌先を上の歯茎にしっかり当てて、その状態を維持したまま舌の側面から空気と声を流します。舌先は歯茎に「貼り付けた」まま離さないのが最大の特徴です。語末では舌の奥も持ち上がり、こもった暗い響きの「ダークL」になります。',
       },
     },
     exampleWord: 'let',
@@ -597,7 +639,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'center',
-        description: '舌先を口の中のどこにも触れさせず、反らせて上方に向けるか舌の中央部を盛り上げる',
+        target: 'none',
+        description:
+          '舌先は口の中のどこにも触れません。発音方法は2つあります。(1) 舌先をカールさせて上あごの方に向ける方法（retroflex）、(2) 舌先は下のままで舌全体を奥に引きながら中央部を盛り上げる方法（bunched）。どちらでも同じ音になります。',
       },
     },
     exampleWord: 'red',
@@ -624,7 +668,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'back',
-        description: '舌の奥を軟口蓋に向かって持ち上げる',
+        target: 'velar',
+        description:
+          '舌の後ろ側（奥の部分）を軟口蓋に向かって持ち上げます。接近音なので舌は軟口蓋に近づくだけで触れません。この構えから素早く次の母音の位置へ移動する「動き」の音です。',
       },
       articulationPoint: '両唇軟口蓋',
     },
@@ -650,7 +696,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'front',
-        description: '舌の前部を硬口蓋に近づけ、舌先は下の歯の裏に自然に置く',
+        target: 'palatal',
+        description:
+          '舌の前部を硬口蓋（口の天井の硬い部分）に近づけます。舌先は下の前歯の裏に自然に置いたままです。接近音なので舌は硬口蓋に近づくだけで触れません。「イ」の位置から素早く次の母音の位置へ移動する「動き」の音です。',
       },
       articulationPoint: '硬口蓋',
     },
@@ -679,7 +727,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'front',
-        description: '舌の前部を硬口蓋に向かって最も高い位置に持ち上げる',
+        target: 'palatal',
+        description:
+          '舌の前部を硬口蓋（口の天井の硬い部分）に向かって最も高い位置に持ち上げます。英語母音の中で舌が最も高く、最も前にある音です。舌先は下の前歯の裏に軽く触れ、舌全体に力を入れた緊張した状態で発音します。',
       },
       openness: '狭（閉）',
     },
@@ -705,7 +755,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'front',
-        description: '舌の前部をやや高めにし、力を入れずに弛緩した状態で保つ',
+        target: 'palatal',
+        description:
+          '舌の前部を硬口蓋に向かってやや高めの位置に置きます。/i/より低く、力を入れずに弛緩した状態（リラックス）で保ちます。舌先は下の前歯の裏あたりに自然に置きます。',
       },
       openness: '半狭',
     },
@@ -731,7 +783,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'front',
-        description: '舌の前部を中程度の高さにし、舌先は下の前歯の裏に軽く触れる',
+        target: 'palatal',
+        description:
+          '舌の前部を中程度の高さに置きます。/i/や/ɪ/より低い位置ですが、まだ前舌の領域です。舌先は下の前歯の裏に軽く触れた状態で、リラックスして発音します。',
       },
       openness: '半広',
     },
@@ -757,7 +811,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'front',
-        description: '舌の前部を低い位置に下げ前方の位置を保つ。舌先は下の前歯の裏に触れたまま',
+        target: 'palatal',
+        description:
+          '舌の前部を低い位置に下げますが、前方の位置は保ちます。英語の前舌母音の中で最も舌が低い音です。舌先は下の前歯の裏に触れたままで、口を大きく開けつつ舌を前に押し出すような感覚です。',
       },
       openness: '広',
     },
@@ -785,7 +841,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'center',
-        description: '口の中央、中程度の高さのニュートラルポジション。前にも後ろにも偏らない',
+        target: 'none',
+        description:
+          '舌は口の中央、中程度の高さのニュートラルな位置に置きます。前にも後ろにも偏らず、どの筋肉にも力を入れない、最もリラックスした状態です。何の準備もなく「声を出すだけ」の最も自然な位置です。',
       },
       openness: '中央（弱）',
     },
@@ -811,7 +869,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'center',
-        description: '舌は中央のやや後方、中程度の高さ。舌先は下の歯の裏あたり',
+        target: 'none',
+        description:
+          '舌は口の中央からやや後方、中程度の高さに置きます。/ə/より位置が明確で、強勢のある音節で力強く発音します。舌先は下の前歯の裏あたりに自然に置きます。',
       },
       openness: '半広',
     },
@@ -837,7 +897,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'center',
-        description: '舌全体をやや後方に引き中央部を盛り上げる。舌先はどこにも触れない',
+        target: 'none',
+        description:
+          '舌全体をやや後方に引き、中央部を盛り上げます。舌先はどこにも触れません。発音方法は2つあります。(1) 舌先を反らせて上方に向ける方法（retroflex）、(2) 舌先は下のままで舌全体を奥に引く方法（bunched）。どちらでも同じ音になります。',
       },
       openness: '中央（R音化・強勢）',
     },
@@ -865,7 +927,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'back',
-        description: '舌の奥を軟口蓋に向かって高く持ち上げる。舌先は下の前歯から離れる',
+        target: 'velar',
+        description:
+          '舌の後ろ側（奥の部分）を軟口蓋に向かって最も高い位置に持ち上げます。英語母音の中で舌が最も後ろにあり、最も高い音です。舌先は下の前歯から離れ、舌全体に力を入れた緊張した状態で発音します。',
       },
       openness: '狭（閉）',
     },
@@ -891,7 +955,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'back',
-        description: '舌の奥部分をやや高めだが中央寄りの位置に置き、力を抜いた状態',
+        target: 'velar',
+        description:
+          '舌の後ろ側（奥の部分）をやや高めの位置に置きますが、/u/より低く、中央寄りです。力を抜いた弛緩した状態（リラックス）で発音します。',
       },
       openness: '半狭',
     },
@@ -917,7 +983,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'back',
-        description: '舌の奥を中程度の高さに持ち上げる。舌先は下の前歯から離れた自然な位置',
+        target: 'velar',
+        description:
+          '舌の後ろ側（奥の部分）を中程度の高さに持ち上げます。/u/や/ʊ/より低い位置です。舌先は下の前歯から離れた自然な位置に置きます。',
       },
       openness: '半広',
     },
@@ -943,7 +1011,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'back',
-        description: '舌を低く平らにしやや後方に引く。舌全体がリラックスして口の底に沈んだ状態',
+        target: 'velar',
+        description:
+          '舌を低く平らにして、やや後方に引きます。英語母音の中で舌が最も低く、口が最も開く音の一つです。舌全体がリラックスして口の底に沈んだ状態で、喉の奥が見えるほど口を大きく開けます。',
       },
       openness: '広',
     },
@@ -971,7 +1041,8 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'dynamic',
-        description: '舌の前部を中程度の高さから、やや高い前方の位置へ持ち上げていく',
+        description:
+          '舌の前部を中程度の高さ（/ɛ/に近い位置）から、より高い前方の位置（/ɪ/に近い位置）へ持ち上げていきます。「エ」から「イ」への滑らかな移動で、前半が長く後半が短い配分です。',
       },
       movement: '前舌→狭',
     },
@@ -997,7 +1068,8 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'dynamic',
-        description: '低い位置から舌の前部を高く持ち上げていく',
+        description:
+          '舌を低い位置（/ɑ/に近い広い状態）から、舌の前部を高い位置（/ɪ/に近い位置）へ大きく持ち上げていきます。英語の二重母音の中で最も舌の動きが大きい音の一つです。',
       },
       movement: '広→狭',
     },
@@ -1023,7 +1095,8 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'dynamic',
-        description: '舌の奥が中程度の高さから、舌の前部を持ち上げていく',
+        description:
+          '舌の後ろ側が中程度の高さ（/ɔ/に近い位置）から始まり、舌の前部を高い位置（/ɪ/に近い位置）へ持ち上げていきます。舌が後方から前方へ移動しながら高くなる、大きな動きを伴う二重母音です。',
       },
       movement: '後舌→狭',
     },
@@ -1049,7 +1122,8 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'dynamic',
-        description: '舌の奥を中程度の高さから高い位置へ持ち上げる',
+        description:
+          '舌の後ろ側を中程度の高さから、より高い位置（/ʊ/に近い位置）へ持ち上げていきます。舌は後方の領域に留まったまま上昇する動きです。「軽いオ」から「すぼめたウ」への移行です。',
       },
       movement: '後舌→狭',
     },
@@ -1075,7 +1149,8 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'dynamic',
-        description: '低い位置から舌の奥を高く持ち上げていく',
+        description:
+          '舌を低い位置（/ɑ/に近い広い状態）から、舌の後ろ側を高い位置（/ʊ/に近い位置）へ大きく持ち上げていきます。口の形が最も大きく変化する二重母音の一つで、舌も低い位置から後方高めの位置へダイナミックに移動します。',
       },
       movement: '広→後舌狭',
     },
@@ -1103,7 +1178,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'center',
-        description: '舌の中央部を持ち上げて盛り上げ、舌先はどこにも触れない',
+        target: 'none',
+        description:
+          '舌の中央部を持ち上げて盛り上げます。舌先はどこにも触れません。発音方法は2つあります。(1) 舌先を反らせて上方に向ける方法（retroflex）、(2) 舌先は下のままで舌全体を奥に引いて「太く」する方法（bunched）。強勢のある位置で明確に発音します。',
       },
     },
     exampleWord: 'bird',
@@ -1128,7 +1205,9 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'center',
-        description: '舌を反らせるか中央を盛り上げるが弱く控えめに',
+        target: 'none',
+        description:
+          '舌を反らせるか中央を盛り上げますが、/ɝ/より弱く控えめに行います。強勢のない位置で現れるため、力を抜いた曖昧な母音に軽くR音の舌の構えを添えるだけで十分です。',
       },
     },
     exampleWord: 'butter',
@@ -1153,7 +1232,8 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'dynamic',
-        description: '舌を低く平らにした状態からR音の構えに移行する',
+        description:
+          '舌を低く平らにした状態（/ɑ/の位置）から始め、R音の舌の構え（舌先を反らせるか中央を盛り上げる）に移行します。最初の「ア」の口を十分に大きく開けることが重要です。',
       },
     },
     exampleWord: 'car',
@@ -1178,7 +1258,8 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'dynamic',
-        description: '舌の奥を中程度の高さにした状態からR音の構えに移行する',
+        description:
+          '舌の後ろ側を中程度の高さにした状態（/ɔ/の位置）から始め、R音の舌の構えに移行します。唇を丸めた「オー」を出しながら舌先を反らせるか中央を盛り上げます。',
       },
     },
     exampleWord: 'door',
@@ -1203,7 +1284,8 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'dynamic',
-        description: '舌の前部をやや高めの位置からR音の構えに移行する（前方から中央への大きな動き）',
+        description:
+          '舌の前部をやや高めの位置（/ɪ/に近い位置）から始め、R音の舌の構えに移行します。舌が前方から中央への大きな動きを伴い、実際の音は「イァ」のような響きになります。',
       },
     },
     exampleWord: 'here',
@@ -1228,7 +1310,8 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'dynamic',
-        description: '舌の前部を中程度の高さからR音の構えに移行する',
+        description:
+          '舌の前部を中程度の高さ（/ɛ/に近い位置）から始め、R音の舌の構えに移行します。/ɪr/より口の開きが大きく、「エァ」のような響きになります。',
       },
     },
     exampleWord: 'there',
@@ -1253,7 +1336,8 @@ const phonemes: Phoneme[] = [
       },
       tongue: {
         region: 'dynamic',
-        description: '舌の奥をやや高めにした状態からR音の構えに移行する',
+        description:
+          '舌の後ろ側をやや高めにした状態（/ʊ/に近い位置）から始め、R音の舌の構えに移行します。唇の丸みを維持しながらR音を出し、「ウァ」のような響きになります。',
       },
     },
     exampleWord: 'sure',
