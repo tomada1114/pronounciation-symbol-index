@@ -3,20 +3,27 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
+import { CategoryIndicator } from '@/app/components/CategoryIndicator'
 import { PhonemeModal } from '@/app/components/PhonemeModal'
 import { SectionGroup } from '@/app/components/SectionGroup'
-import { TabBar } from '@/app/components/TabBar'
-import { getPhonemesByCategory, groupBySubcategory } from '@/app/domain/helpers'
-import type { Category, Phoneme, Subcategory } from '@/app/domain/types'
+import {
+  ORDERED_CATEGORIES,
+  getPhonemesByCategory,
+  groupBySubcategory,
+} from '@/app/domain/helpers'
+import type { Phoneme, Subcategory } from '@/app/domain/types'
 import { useDifficultPhonemes } from '@/app/hooks/useDifficultPhonemes'
+import { useScrollSnap } from '@/app/hooks/useScrollSnap'
+
+const CATEGORY_PANELS = ORDERED_CATEGORIES.map(({ category }) => ({
+  category,
+  groups: groupBySubcategory(getPhonemesByCategory(category)),
+}))
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<Category>('consonant')
   const [selectedPhoneme, setSelectedPhoneme] = useState<Phoneme | null>(null)
   const { symbols: difficultSymbols, toggleDifficult, isDifficult } = useDifficultPhonemes()
-
-  const filteredPhonemes = getPhonemesByCategory(activeTab)
-  const grouped = groupBySubcategory(filteredPhonemes)
+  const { containerRef, activeIndex, scrollToIndex } = useScrollSnap(ORDERED_CATEGORIES.length)
 
   const handleSelect = (phoneme: Phoneme) => {
     setSelectedPhoneme(phoneme)
@@ -63,18 +70,28 @@ export default function Home() {
         </div>
       </header>
 
-      <TabBar activeTab={activeTab} onTabChange={setActiveTab} />
+      <CategoryIndicator activeIndex={activeIndex} onSelect={scrollToIndex} />
 
-      <main className="pb-8 pt-4">
-        {Object.entries(grouped).map(([subcategory, phonemes]) => (
-          <SectionGroup
-            key={subcategory}
-            subcategory={subcategory as Subcategory}
-            phonemes={phonemes}
-            onSelect={handleSelect}
-          />
+      <div ref={containerRef} className="swipe-container">
+        {CATEGORY_PANELS.map(({ category, groups }) => (
+          <section
+            key={category}
+            role="tabpanel"
+            id={`panel-${category}`}
+            aria-labelledby={`tab-${category}`}
+            className="swipe-panel"
+          >
+            {Object.entries(groups).map(([subcategory, phonemes]) => (
+              <SectionGroup
+                key={subcategory}
+                subcategory={subcategory as Subcategory}
+                phonemes={phonemes}
+                onSelect={handleSelect}
+              />
+            ))}
+          </section>
         ))}
-      </main>
+      </div>
 
       {selectedPhoneme !== null && (
         <PhonemeModal
