@@ -1,5 +1,5 @@
 import { ALL_PHONEMES } from './phonemes'
-import type { Category, LipShape, Phoneme, Subcategory, TongueRegion } from './types'
+import type { Category, LipShape, Phoneme, Subcategory, TongueRegion, TongueTarget } from './types'
 
 export const ORDERED_CATEGORIES: readonly { readonly category: Category; readonly label: string }[] =
   [
@@ -62,10 +62,24 @@ const TONGUE_REGION_LABELS: Record<TongueRegion, { ja: string; en: string }> = {
   dynamic: { ja: '変化', en: 'Dynamic' },
 }
 
+const TONGUE_TARGET_LABELS: Record<TongueTarget, { ja: string; en: string }> = {
+  alveolar: { ja: '歯茎', en: 'Alveolar' },
+  'post-alveolar': { ja: '後部歯茎', en: 'Post-alveolar' },
+  palatal: { ja: '硬口蓋', en: 'Palatal' },
+  velar: { ja: '軟口蓋', en: 'Velar' },
+  dental: { ja: '歯', en: 'Dental' },
+  interdental: { ja: '歯間', en: 'Interdental' },
+  none: { ja: 'なし', en: 'None' },
+}
+
 export function getLipShapeLabel(shape: LipShape): { ja: string; en: string } {
   return LIP_SHAPE_LABELS[shape]
 }
 
 export function getTongueRegionLabel(region: TongueRegion): { ja: string; en: string } {
   return TONGUE_REGION_LABELS[region]
+}
+
+export function getTongueTargetLabel(target: TongueTarget): { ja: string; en: string } {
+  return TONGUE_TARGET_LABELS[target]
 }
