@@ -57,6 +57,28 @@ body {
   color: var(--text-primary);
 }
 
+.swipe-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.swipe-container::-webkit-scrollbar {
+  display: none;
+}
+
+.swipe-panel {
+  flex: 0 0 100%;
+  width: 100%;
+  scroll-snap-align: start;
+  overflow-y: auto;
+  padding-top: var(--space-4, 16px);
+  padding-bottom: var(--space-8, 32px);
+}
+
 @keyframes modal-backdrop-in {
   from { opacity: 0; }
   to { opacity: 1; }
